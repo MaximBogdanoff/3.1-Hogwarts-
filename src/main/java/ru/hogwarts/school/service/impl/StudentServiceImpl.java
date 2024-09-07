@@ -6,8 +6,9 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 import ru.hogwarts.school.service.StudentService;
 
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -51,7 +52,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<Student> findAllByAgeBetween(int fromAge, int toAge) {
-        return findAllByAgeBetween(fromAge, toAge);
+        return studentRepository.findAllByAgeBetween(fromAge, toAge);
     }
 
     @Override
@@ -59,6 +60,22 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.findById(studentId)
                 .map(Student::getFaculty)
                 .orElse(null);
+    }
+
+
+    @Override
+    public int getAmountOfStudents() {
+        return studentRepository.getAmountOfStudents();
+    }
+
+    @Override
+    public double getAverageAgeOfStudents() {
+        return studentRepository.getAverageAgeOfStudents();
+    }
+
+    @Override
+    public List<Student> getLastStudents(int count) {
+        return studentRepository.getLastStudents(count);
     }
 
 }

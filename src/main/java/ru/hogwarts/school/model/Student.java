@@ -5,8 +5,6 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
-
-
 public class Student {
     @Id
     @GeneratedValue
@@ -16,9 +14,7 @@ public class Student {
     @ManyToOne
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
-
     public Student() {
-
     }
 
     public Student(Long id, String name, int age) {
@@ -28,7 +24,8 @@ public class Student {
     }
 
     public Student(String name, int age) {
-
+        this.name = name;
+        this.age = age;
     }
 
     public Long getId() {
@@ -76,7 +73,6 @@ public class Student {
                 ", age=" + age +
                 '}';
     }
-
     public Faculty getFaculty() {
         return faculty;
     }
@@ -84,4 +80,5 @@ public class Student {
     public void setFaculty(Faculty faculty) {
         this.faculty = faculty;
     }
+
 }

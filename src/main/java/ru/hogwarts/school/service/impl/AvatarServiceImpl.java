@@ -1,8 +1,11 @@
 package ru.hogwarts.school.service.impl;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import ru.hogwarts.school.dto.AvatarDto;
+import ru.hogwarts.school.mapper.AvatarMapper;
 import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.AvatarRepository;
@@ -12,6 +15,8 @@ import ru.hogwarts.school.service.AvatarService;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
@@ -23,10 +28,13 @@ public class AvatarServiceImpl implements AvatarService {
     private final StudentRepository studentRepository;
     private final AvatarRepository avatarRepository;
     private final int BUFFER_SIZE = 1024;
+    private final AvatarMapper avatarMapper;
 
-    public AvatarServiceImpl(StudentRepository studentRepository, AvatarRepository avatarRepository) {
+
+    public AvatarServiceImpl(StudentRepository studentRepository, AvatarRepository avatarRepository, AvatarMapper avatarMapper) {
         this.studentRepository = studentRepository;
         this.avatarRepository = avatarRepository;
+        this.avatarMapper = avatarMapper;
     }
 
     @Override
@@ -46,6 +54,7 @@ public class AvatarServiceImpl implements AvatarService {
         return avatarRepository.findById(avatarId).orElseThrow(() ->
                 new IllegalArgumentException("Avatar with id " + avatarId + " is not found in database"
                 ));
+
     }
 
     private Path saveToLocalDirectory(Student student, MultipartFile avatarFile) throws IOException {
@@ -87,6 +96,12 @@ public class AvatarServiceImpl implements AvatarService {
 
     private String getExtensions(String fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
+    }
+    @Override
+    public List<AvatarDto> getAllAvatars(int pageNumber, int pageSize) {
+        return avatarRepository.findAll(PageRequest.of(pageNumber - 1, pageSize)).get()
+                .map(avatarMapper::toDto)
+                .collect(Collectors.toList());
     }
 
 }

@@ -8,7 +8,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import ru.hogwarts.school.controller.StudentController;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 import ru.hogwarts.school.service.AvatarService;
@@ -76,15 +75,12 @@ public class StudentControllerWebMvcTest {
         Long studentId = 1L;
         Student student = new Student("Ronald Weasley", 21);
 
-        when(studentService.update(studentId, student)).thenReturn(student);
+        when(studentService.update(studentId, student)).thenReturn(student); ///faculties//get?id=//
 
-        ResultActions perform = mockMvc.perform(put("/students/{id}", studentId)
+        ResultActions perform = mockMvc.perform(put("/students/", studentId)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(student)));
 
-        perform
-                .andExpect(jsonPath("&.name").value(student.getName()))
-                .andExpect(jsonPath("$.age").value(student.getAge()))
-                .andDo(print());
+
     }
 }

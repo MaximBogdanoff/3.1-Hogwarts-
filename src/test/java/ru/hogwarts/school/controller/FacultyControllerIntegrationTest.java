@@ -19,8 +19,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-
 public class FacultyControllerIntegrationTest {
+
     @LocalServerPort
     private int port;
 
@@ -31,9 +31,10 @@ public class FacultyControllerIntegrationTest {
     private TestRestTemplate restTemplate;
 
     @BeforeEach
-    public void clearDatabase() {
+    public void clear(){
         facultyRepository.deleteAll();
     }
+
     @Test
     void shouldCreateFaculty() {
         Faculty faculty= new Faculty("Griffindor", "Green");
@@ -53,10 +54,10 @@ public class FacultyControllerIntegrationTest {
 
     @Test
     void shouldUpdateFaculty() {
-        Faculty faculty= new Faculty("name", "color");
+        Faculty faculty= new Faculty("Slytherin", "color");
         faculty=facultyRepository.save(faculty);
 
-        Faculty facultyForUpdate=new Faculty("newName","newColor");
+        Faculty facultyForUpdate=new Faculty("Griffindor","Green");
 
         HttpEntity<Faculty> entity = new HttpEntity<>(facultyForUpdate);
         ResponseEntity<Faculty> facultyResponseEntity=restTemplate.exchange("http://localhost:"+port+"/faculties/"+faculty.getId(),
@@ -79,7 +80,7 @@ public class FacultyControllerIntegrationTest {
         faculty=facultyRepository.save(faculty);
 
         ResponseEntity<Faculty> facultyResponseEntity=restTemplate.getForEntity(
-                "http://localhost:"+port+"/faculties/get?id="+faculty.getId(),
+                "http://localhost:"+port+"/faculties//get?id="+faculty.getId(),
                 Faculty.class
         );
 
@@ -94,24 +95,18 @@ public class FacultyControllerIntegrationTest {
 
     @Test
     void shouldDeleteFaculty() {
-        Faculty faculty= new Faculty("name", "color");
-        faculty=facultyRepository.save(faculty);
 
-        ResponseEntity<Faculty> facultyResponseEntity=restTemplate.exchange(
-                "http://localhost:"+port+"/faculties/"+faculty.getId(),
+        Faculty faculty = new Faculty("Hufflepuff", "yellow");
+        faculty = facultyRepository.save(faculty);
+
+        ResponseEntity<Faculty> facultyResponseEntity = restTemplate.exchange(
+                "http://localhost:" + port + "/faculties/" + faculty.getId(),
                 HttpMethod.DELETE,
                 null,
                 Faculty.class
         );
         assertNotNull(facultyResponseEntity);
         assertEquals(facultyResponseEntity.getStatusCode(), HttpStatusCode.valueOf(200));
-
         org.assertj.core.api.Assertions.assertThat(facultyRepository.findById(faculty.getId())).isNotPresent();
     }
-
-
-
-
-
-
 }

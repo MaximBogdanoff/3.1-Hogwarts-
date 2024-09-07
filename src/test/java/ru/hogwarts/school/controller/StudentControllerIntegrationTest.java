@@ -80,7 +80,7 @@ public class StudentControllerIntegrationTest {
         student = studentRepository.save(student);
 
         ResponseEntity<Student> studentResponseEntity = restTemplate.getForEntity(
-                "http://localhost:"+port+"/students/get?id="+student.getId(),
+                "http://localhost:" + port + "/students/get?id=" + student.getId(),
                 Student.class
         );
 
@@ -88,7 +88,7 @@ public class StudentControllerIntegrationTest {
         Assertions.assertEquals(studentResponseEntity.getStatusCode(), HttpStatusCode.valueOf(200));
 
         Student actualStudent = studentResponseEntity.getBody();
-        assertEquals(actualStudent.getId(), student.getId());
+        Assertions.assertEquals(actualStudent.getId(), student.getId());
         assertEquals(actualStudent.getName(), student.getName());
         assertEquals(actualStudent.getAge(), student.getAge());
     }

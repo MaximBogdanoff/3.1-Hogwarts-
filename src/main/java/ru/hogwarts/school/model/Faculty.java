@@ -5,25 +5,23 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-
-
 public class Faculty {
     @Id
     @GeneratedValue
     private Long id;
     private String name;
     private String color;
+
     @JsonIgnore
     @OneToMany(mappedBy = "faculty")
     private List<Student> students;
-
     public Faculty() {
-
     }
 
     public Faculty(Long id, String name, String color) {
@@ -82,7 +80,6 @@ public class Faculty {
                 ", color='" + color + '\'' +
                 '}';
     }
-
     public List<Student> getStudents() {
         return students;
     }

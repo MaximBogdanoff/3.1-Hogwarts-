@@ -1,9 +1,6 @@
 package ru.hogwarts.school.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -11,7 +8,7 @@ import java.util.Objects;
 @Entity
 public class Avatar {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String filePath;
 
@@ -19,6 +16,7 @@ public class Avatar {
     private String mediaType;
     private byte[] data;
     @OneToOne
+    @JoinColumn(name="student_id")
     private Student student;
 
     public Avatar(Long id, String filePath, Long fileSize, String mediaType, byte[] data, Student student) {
@@ -40,6 +38,7 @@ public class Avatar {
     public void setId(Long id) {
         this.id = id;
     }
+
 
     public String getFilePath() {
         return filePath;
