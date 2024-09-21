@@ -80,7 +80,7 @@ public class StudentControllerIntegrationTest {
         student = studentRepository.save(student);
 
         ResponseEntity<Student> studentResponseEntity = restTemplate.getForEntity(
-                "http://localhost:" + port + "/students/get?id=" + student.getId(),
+                "http://localhost:" + port + "/students/" + student.getId(),
                 Student.class
         );
 

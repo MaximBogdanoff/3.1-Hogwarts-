@@ -22,9 +22,8 @@ public class FacultyController {
     }
 
     @GetMapping("{id}")
-    public Faculty read(@RequestParam Long id) {
-        return facultyService.read(id);
-    }
+    public Faculty read(@PathVariable Long id) {
+        return facultyService.read(id);}
 
     @PutMapping("{id}")
     public Faculty update1(@PathVariable Long id, @RequestBody Faculty faculty) {

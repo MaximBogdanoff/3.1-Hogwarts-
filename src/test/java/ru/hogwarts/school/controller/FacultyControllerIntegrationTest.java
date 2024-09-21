@@ -80,7 +80,7 @@ public class FacultyControllerIntegrationTest {
         faculty=facultyRepository.save(faculty);
 
         ResponseEntity<Faculty> facultyResponseEntity=restTemplate.getForEntity(
-                "http://localhost:"+port+"/faculties//get?id="+faculty.getId(),
+                "http://localhost:"+port+"/faculties/"+faculty.getId(),
                 Faculty.class
         );
 

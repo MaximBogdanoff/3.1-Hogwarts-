@@ -22,8 +22,8 @@ public class StudentController {
         return studentService.create(student);
     }
 
-    @GetMapping("/{id}")
-    public Student read(@RequestParam Long id) {
+    @GetMapping("{id}")
+    public Student read(@PathVariable Long id) {
         return studentService.read(id);
     }
 

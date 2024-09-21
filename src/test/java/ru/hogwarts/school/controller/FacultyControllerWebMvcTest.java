@@ -38,16 +38,12 @@ public class FacultyControllerWebMvcTest {
     void shouldGetFaculty() throws Exception {
         Long facultyId = 1L;
         Faculty faculty = new Faculty("Hufflepuff", "yellow");
-
         when(facultyService.read(facultyId)).thenReturn(faculty);
-
         ResultActions perform = mockMvc.perform(get("/faculties/{id}", facultyId));
-
         perform
                 .andExpect(jsonPath("$.name").value(faculty.getName()))
                 .andExpect(jsonPath("$.color").value(faculty.getColor()))
-                .andDo(print());
-    }
+                .andDo(print());}
 
     @Test
     void shouldCreateFaculty() throws Exception {
@@ -73,11 +69,13 @@ public class FacultyControllerWebMvcTest {
     void shouldUpdateFaculty() throws  Exception {
         Long facultyId = 1L;
         Faculty faculty = new Faculty("Griffindor", "green");
-
         when(facultyService.update(facultyId, faculty)).thenReturn(faculty);
-
-        ResultActions perform= mockMvc.perform(put("/faculties/")
+        ResultActions perform = mockMvc.perform(put("/faculties/{id}", facultyId)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(faculty)));
+        perform
+                .andExpect(jsonPath("$.name").value(faculty.getName()))
+                .andExpect(jsonPath("$.color").value(faculty.getColor()))
+                .andDo(print());
     }
 }
