@@ -12,12 +12,16 @@ import org.springframework.test.web.servlet.ResultActions;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 import ru.hogwarts.school.service.AvatarService;
+import ru.hogwarts.school.repository.StudentRepository;
 
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
 @WebMvcTest(StudentController.class)
 public class StudentControllerWebMvcTest {
