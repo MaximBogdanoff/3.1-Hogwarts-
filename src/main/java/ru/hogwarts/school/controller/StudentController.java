@@ -65,4 +65,13 @@ public class StudentController {
     public List<Student> getLastStudents(@RequestParam int count) {
         return studentService.getLastStudents(count);
     }
+    @GetMapping("startsWithA")
+    public List<String> startsWithA() {
+        return studentService.startsWithA();
+    }
+    @GetMapping("averageAge")
+    public double getAverageAge() {
+        return studentService.getAverageAge();
+    }
+
 }
